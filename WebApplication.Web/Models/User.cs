@@ -28,7 +28,7 @@ namespace WebApplication.Web.Models
 		public string Email { get; set; }
 
 		/// <summary>
-		/// The user's firt name.
+		/// The user's first name.
 		/// </summary>
 		[Required]
 		[MaxLength(50)]
@@ -81,7 +81,26 @@ namespace WebApplication.Web.Models
 		/// <summary>
 		/// The recommended number of calories the user should consume daily.
 		/// </summary>
-		public int RecommendedDailyCaloricIntake { get; set; }
+		public int RecommendedDailyCaloricIntake
+        {
+            get
+            {
+                int recommendedDailyCalories = 0;
+                int femaleBasalMetabolicRate =
+                    (int) Math.Round(
+                        (10 * (CurrentWeight * 2.20462)) +
+                        (6.25 * (Height * 2.54)) - 
+                        (5 * Age) - 161);
+
+                int maleBasalMetabolicRate =
+                    (int) Math.Round(
+                        (10 * (CurrentWeight * 2.20462)) +
+                        (6.25 * (Height * 2.54)) -
+                        (5 * Age) + 5);
+
+                return recommendedDailyCalories;
+            }
+        }
 
 		/// <summary>
 		/// The number of consecutive meals that the user has logged.
