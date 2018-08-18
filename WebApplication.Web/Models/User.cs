@@ -92,17 +92,32 @@ namespace WebApplication.Web.Models
                         (6.25 * (Height * 2.54)) - 
                         (5 * Age) - 161);
 
+                // Note: ~200 cal difference between men / women
                 int maleBasalMetabolicRate =
                     (int) Math.Round(
                         (10 * (CurrentWeight * 2.20462)) +
                         (6.25 * (Height * 2.54)) -
                         (5 * Age) + 5);
 
-                // If the user wishes to maintain their current weight
                 // Assume the user lightly exercises (1 - 3 times per week)
+                // These calculations are based on gaining and / or losing 1 lb per week
+
+                // If the user wishes to maintain their current weight
                 if (CurrentWeight == DesiredWeight)
                 {
                     recommendedDailyCalories = (int) Math.Round(femaleBasalMetabolicRate * 1.375);
+                }
+
+                // If the user wishes to lose weight
+                else if (CurrentWeight > DesiredWeight)
+                {
+                    recommendedDailyCalories = (int) Math.Round((femaleBasalMetabolicRate * 1.375) - 500);
+                }
+
+                // If the user wishes to gain weight
+                else
+                {
+                    recommendedDailyCalories = (int) Math.Round((femaleBasalMetabolicRate * 1.375) + 500);
                 }
 
                 return recommendedDailyCalories;
