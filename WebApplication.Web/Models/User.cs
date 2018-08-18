@@ -98,6 +98,13 @@ namespace WebApplication.Web.Models
                         (6.25 * (Height * 2.54)) -
                         (5 * Age) + 5);
 
+                // If the user wishes to maintain their current weight
+                // Assume the user lightly exercises (1 - 3 times per week)
+                if (CurrentWeight == DesiredWeight)
+                {
+                    recommendedDailyCalories = (int) Math.Round(femaleBasalMetabolicRate * 1.375);
+                }
+
                 return recommendedDailyCalories;
             }
         }
