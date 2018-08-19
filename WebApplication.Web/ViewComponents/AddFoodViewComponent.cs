@@ -20,7 +20,7 @@ namespace WebApplication.Web.ViewComponents
 		public IViewComponentResult Invoke()
 		{
 			var user = authProvider.GetCurrentUser();
-			return View(user);
+			return View();
 			
 		}
 		

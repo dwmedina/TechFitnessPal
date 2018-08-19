@@ -1,11 +1,15 @@
-﻿
-@*
+﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-<p>Search and Add A Food</p>
-<div id="userAddFood">
-    <div>Add A Food</div>
-    <div>Log Meals</div>
-    <div>Add A Meal</div>
-    <div>My Quick Meals</div>
-</div>
+@model FoodPreview
+@*@{
+    ViewData["Title"] = "AddFood";
+}*@
+
+<h2>Search For A Food to Add</h2>
+@*<form asp-controller="Dashboard" asp-action="FoodResults" method="get">
+    <label asp-for="Name"></label>
+    <input type="text" asp-for="Name" />
+
+    <button type="submit" value="Submit">Search</button>
+</form>*@
