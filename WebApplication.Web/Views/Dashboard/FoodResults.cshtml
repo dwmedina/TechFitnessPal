@@ -1,5 +1,6 @@
-﻿@model SearchResults
+﻿@model Tuple<FoodPreview,SearchResults>
 @{
+  
     ViewData["Title"] = "FoodResults";
 }
 <head>
@@ -30,6 +31,7 @@
 <div class="wrapper">
 
     @await Component.InvokeAsync("DashboardNavigation")
+
 
     <div class="column" id="userInfo">
 
@@ -67,6 +69,6 @@
             }
         </div>
     </div>
-    </div>
+</div>
 
 
