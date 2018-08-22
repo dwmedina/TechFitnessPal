@@ -18,7 +18,7 @@ namespace WebApplication.Web.Controllers
 		private readonly IUserFoodDAL dal;
 		private readonly IWeightDAL weightDal;
 		private readonly IUserDAL userDal;
-		
+
 		public DashboardController(IAuthProvider authProvider, IUserFoodDAL dal, IWeightDAL weightDal, IUserDAL userDal)
 		{
 			this.authProvider = authProvider;
@@ -44,7 +44,7 @@ namespace WebApplication.Web.Controllers
 				Tuple<User, IList<UserFood>, IList<UserWeight>> data = new Tuple<User, IList<UserFood>, IList<UserWeight>>(user, userFoods, userWeights);
 
 				var weightData = new List<int>();
-				var dateData = new List<DateTime>();
+				var dateData = new List<string>();
 
 				foreach (var item in userWeights)
 				{
@@ -53,7 +53,7 @@ namespace WebApplication.Web.Controllers
 
 				foreach (var date in userWeights)
 				{
-					dateData.Add(date.DateOfEntry);
+					dateData.Add(date.DateOfEntry.ToShortDateString());
 				}
 
 				ViewBag.AllUserWeights = weightData;
@@ -193,5 +193,5 @@ namespace WebApplication.Web.Controllers
 			userDal.UpdateUser(user);
 			return RedirectToAction("Index", "Dashboard");
 		}
-	}	
+	}
 }

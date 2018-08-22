@@ -5,20 +5,6 @@
     var userFoods = Model.Item2;
     var userWeights = Model.Item3;
     float totalConsumedCalories = 0;
-    //var weightData = new List<int>();
-    //var dateData = new List<DateTime>();
-
-    //foreach (var weight in userWeights)
-    //{
-    //    weightData.Add(weight.TodaysWeight);
-    //}
-
-    //foreach (var date in userWeights)
-    //{
-    //    dateData.Add(date.DateOfEntry);
-    //}
-
-
 
     foreach (var userFood in userFoods)
     {
@@ -27,18 +13,14 @@
             totalConsumedCalories += (userFood.CaloriesPerServing * userFood.NumberOfServings);
         }
     }
-
-
 }
-
-
 
 <head>
     <link rel="stylesheet" href="~/css/UserDashboard.css" />
     <link rel="stylesheet" href="~/css/DashboardOverview.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    
+
 </head>
 
 <div class="wrapper">
@@ -94,8 +76,8 @@
                                         </form>
                                     </td>
                                 </tr>
-}
-}
+                            }
+                        }
 
                     </tbody>
                 </table>
@@ -139,8 +121,8 @@
                                         </form>
                                     </td>
                                 </tr>
-}
-}
+                            }
+                        }
                     </tbody>
                 </table>
             </div>
@@ -182,8 +164,8 @@
                                         </form>
                                     </td>
                                 </tr>
-}
-}
+                            }
+                        }
 
                     </tbody>
                 </table>
@@ -225,8 +207,8 @@
                                         </form>
                                     </td>
                                 </tr>
-}
-}
+                            }
+                        }
                     </tbody>
                 </table>
             </div>
@@ -270,119 +252,73 @@
                                         </form>
                                     </td>
                                 </tr>
-}
-}
-
-                    </tbody>
-                </table>
-
-            </div>
-            @*Show Other Foods Table*@
-            <div>
-                <h2>Other Foods</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Food Item</th>
-                            <th>Number of Servings</th>
-                            <th>Calorie Count</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-
-                        @foreach (var userFood in userFoods)
-
-                        {
-                            @if (userFood.MealId == 0 && user.Id == userFood.UserId)
-                            {
-                                <tr>
-                                    <td>@userFood.FoodName</td>
-                                    <td>@userFood.NumberOfServings</td>
-                                    <td>@(userFood.CaloriesPerServing * userFood.NumberOfServings)</td>
-                                    <td>
-                                        <form asp-controller="Dashboard" asp-action="UpdateFood" method="get">
-                                            <input type="hidden" name="userId" value="@userFood.UserId" />
-                                            <input type="hidden" name="rowId" value="@userFood.RowId" />
-                                            <button class="btn edit-btn">Edit</button>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form asp-controller="Dashboard" asp-action="DeleteFoodItem" method="get">
-                                            <input type="hidden" name="rowId" value="@userFood.RowId" />
-                                            <input type="hidden" name="userId" value="@userFood.UserId" />
-                                            <button class="btn" value="submit" type="submit">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                             }
+                            }
                         }
 
                     </tbody>
                 </table>
 
             </div>
+
         </div>
         <div id="targetDashboard">
             <div id="targetOpacity">
-            <div>
-                <h2>Current Weight: @user.CurrentWeight lbs.</h2>
-                @Html.ValidationMessage("log-your-weight")
-                @*@if(Validation.IsValid())*@
+                <div>
+                    <h2>Current Weight: @user.CurrentWeight lbs.</h2>
+                    @Html.ValidationMessage("log-your-weight")
+                    @*@if(Validation.IsValid())*@
+                </div>
+
+
+                <!-- if userWeight exists for date.today, render the edit button-->
+                @if (userWeights.Count == 0 || (userWeights[userWeights.Count - 1].DateOfEntry == DateTime.Today && userWeights[userWeights.Count - 1].TodaysWeight != 0))
+                {
+                    <form asp-controller="Dashboard" asp-action="LogWeight" method="post">
+                        <span>
+                            <div class="register-field">
+                                <button class="btn btn-info" value="submit" type="submit">Edit Today's Weight</button>
+                            </div>
+                        </span>
+                    </form>
+
+                }
+                else
+                {
+                    <form asp-controller="Dashboard" asp-action="LogWeight" method="post">
+                        <input name="weight" type="number" autocomplete="off" value="@user.CurrentWeight" />
+                        <span>
+                            <div class="register-field">
+                                <button class="btn btn-info" value="submit" type="submit">Add Today's Weight</button>
+                            </div>
+                        </span>
+                    </form>
+                }
+
+                <div>
+                    <h2>Goal Weight: @user.DesiredWeight lbs.</h2>
+                </div>
+                <div id="bmi">
+                    <h2>Current BMI: @user.BMI</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Underweight</th>
+                                <th>Normal</th>
+                                <th>Overweight</th>
+                                <th>Obese</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>< 18.5</td>
+                                <td>18.5 - 24.9</td>
+                                <td>25 - 29.9</td>
+                                <td>> 30</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-
-            <!-- if userWeight exists for date.today, render the edit button-->
-            @if (userWeights.Count == 0 || (userWeights[userWeights.Count-1].DateOfEntry == DateTime.Today && userWeights[userWeights.Count - 1].TodaysWeight != 0))
-            {
-                <form asp-controller="Dashboard" asp-action="LogWeight" method="post">
-                    <span>
-                        <div class="register-field">
-                            <button class="btn btn-info" value="submit" type="submit">Edit Today's Weight</button>
-                        </div>
-                    </span>
-                </form>
-
-            }
-            else
-            {
-                <form asp-controller="Dashboard" asp-action="LogWeight" method="post">
-                    <input name="weight" type="number" autocomplete="off" value="@user.CurrentWeight" />
-                    <span>
-                        <div class="register-field">
-                            <button class="btn btn-info" value="submit" type="submit">Add Today's Weight</button>
-                        </div>
-                    </span>
-                </form>
-            }
-
-            <div>
-                <h2>Goal Weight: @user.DesiredWeight lbs.</h2>
-            </div>
-            <div id="bmi">
-                <h2>Current BMI: @user.BMI</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Underweight</th>
-                            <th>Normal</th>
-                            <th>Overweight</th>
-                            <th>Obese</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>< 18.5</td>
-                            <td>18.5 - 24.9</td>
-                            <td>25 - 29.9</td>
-                            <td>> 30</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
             <form asp-controller="Dashboard" asp-action="Index">
                 <label>
                     Start Date
@@ -396,7 +332,7 @@
                     End Date
                 </label>
 
-                <input name="endDate" type="date" placeholder="@DateTime.Today.ToShortDateString()"/>
+                <input name="endDate" type="date" placeholder="@DateTime.Today.ToShortDateString()" />
 
                 <br />
 
@@ -410,22 +346,17 @@
                         <th>Date</th>
                         <th>Weight</th>
                     </tr>
-
                 </thead>
                 <tbody>
-
                     @foreach (var userWeight in userWeights)
-
                     {
                         <tr>
                             <td>@userWeight.DateOfEntry.ToShortDateString()</td>
                             <td>@userWeight.TodaysWeight lbs.</td>
                         </tr>
                     }
-
                 </tbody>
             </table>
-
             <div id="chartContainer">
                 <canvas id="userChart" width="500" height="300"></canvas>
             </div>
@@ -433,23 +364,41 @@
     </div>
 </div>
 <script>
-    
+
     var userWeight = @Html.Raw(Json.Serialize(ViewBag.AllUserWeights));
     var userDate = @Html.Raw(Json.Serialize(ViewBag.AllUserDates));
-
+    var goalWeight = @Html.Raw(Json.Serialize(Model.Item1.DesiredWeight));
+    var currentWeight = @Html.Raw(Json.Serialize(Model.Item1.CurrentWeight));
+    
     var ctx = document.getElementById("userChart");
     var lineChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: userDate,
             datasets: [{
-                label: "Weight Progress",
-                data: userWeight,
-                backgroundColor: [],
-                borderWidth: 1,
+
+                label: 'Weight Progress',
+                fill: false,
+                backgroundColor: ['#5bc0de'],
+                borderColor: ['#5bc0de'],
+                borderWidth: 2,
+                data: userWeight
+              
+
+            },
+                {
+                    label: 'Goal Weight',
+                    fill: false,
+                    backgroundColor: ['#5bc0de'],
+                    borderColor: ['#5bc0de'],
+                    borderDash: [5, 5],
+                    data: [
+                        goalWeight,
+                        currentWeight
+                    ]
 
             }]
-
+           
         }
     });
 </script>
