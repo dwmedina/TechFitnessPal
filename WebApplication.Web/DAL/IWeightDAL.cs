@@ -8,7 +8,7 @@ namespace WebApplication.Web.DAL
 {
     public interface IWeightDAL
     {
-		IList<UserWeight> GetWeights(User user, DateTime? startDate, DateTime? endDate);
+		IList<UserWeight> GetWeights(User user, DateTime startDate, DateTime endDate);
 
 		void EnterDailyWeight(User user, int weight);
 

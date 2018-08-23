@@ -1,0 +1,77 @@
+h2 {
+    font-weight: 700;
+    letter-spacing: 0.3rem;
+}
+
+/********************/
+/* Background Image */
+/********************/
+.container.body-content {
+    background: url("../images/view_food_detail.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.4);
+    background-blend-mode: lighten;
+    font-family: 'Montserrat';
+    min-height: 100vh;
+}
+
+/********************/
+/*** Main Flexbox ***/
+/********************/
+#foodDetailFlexbox {
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: row wrap;
+    padding: 4rem;
+}
+
+/********************/
+/** Nutrition Info **/
+/****   Opacity  ****/
+/********************/
+#foodDetailFlexbox article {
+    margin: 1rem auto;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 4rem;
+}
+
+
+/*** Article Styling ***/
+#firstDetails {
+    font-size: 2.5rem;
+}
+
+#secondDetails {
+    font-size: 2rem;
+}
+
+
+
+#saveFoodForm {
+    font-size: 2rem;
+}
+
+#saveFoodForm > form > button {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+/*** Dropdown Options ***/
+form > select, form > div > select {
+    padding: 0.7rem;
+}
+
+form > div > select {
+    margin-top: 2rem;
+}
+
+#copyright {
+    text-align: right;
+
+    text-shadow:
+    -1px -1px 0 #fff, 
+     1px -1px 0 #fff, 
+    -1px 1px 0 #fff, 
+     1px 1px 0 #fff;
+}

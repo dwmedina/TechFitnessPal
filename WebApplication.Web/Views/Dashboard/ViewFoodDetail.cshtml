@@ -2,50 +2,64 @@
 @{
     ViewData["Title"] = "ViewFoodDetail";
 }
-
+<head>
+    <link rel="stylesheet" href="~/css/viewFoodDetail.css" />
+</head>
 <h2>Nutrition Details for @Model.foods[0].Name</h2>
-<img src="@Model.foods[0].Imgurl" />
-<p>@Model.foods[0].serving_qty @Model.foods[0].serving_unit per serving</p>
-<p><strong>Calories: </strong>@Model.foods[0].nf_calories</p>
-<p><strong>Total Fat: </strong>@Model.foods[0].nf_total_fat</p>
-<p><strong>Saturated Fat: </strong>@Model.foods[0].nf_saturated_fat</p>
-<p><strong>Carbohydrates: </strong>@Model.foods[0].nf_total_carbohydrate</p>
-<p><strong>Protein: </strong>@Model.foods[0].nf_protein</p>
-<p><strong>Sugars: </strong>@Model.foods[0].nf_sugars</p>
-<p><strong>Dietary Fiber: </strong>@Model.foods[0].nf_dietary_fiber</p>
-<p><strong>Cholesterol: </strong>@Model.foods[0].nf_cholesterol</p>
-<p><strong>Sodium: </strong>@Model.foods[0].nf_sodium</p>
-<p><strong>Potassium: </strong>@Model.foods[0].nf_potassium</p>
+<div id="foodDetailFlexbox">
+    <div>
+        <img src="@Model.foods[0].Imgurl" />
+    </div>
+    <article id="firstDetails">
+        <p>@Model.foods[0].serving_qty @Model.foods[0].serving_unit per serving</p>
+        <p><strong>Calories: </strong>@Model.foods[0].nf_calories</p>
+        <p><strong>Total Fat: </strong>@Model.foods[0].nf_total_fat</p>
+        <p><strong>Saturated Fat: </strong>@Model.foods[0].nf_saturated_fat</p>
+        <p><strong>Carbohydrates: </strong>@Model.foods[0].nf_total_carbohydrate</p>
+    </article>
+    <article id="secondDetails">
+        <p><strong>Protein: </strong>@Model.foods[0].nf_protein</p>
+        <p><strong>Sugars: </strong>@Model.foods[0].nf_sugars</p>
+        <p><strong>Dietary Fiber: </strong>@Model.foods[0].nf_dietary_fiber</p>
+        <p><strong>Cholesterol: </strong>@Model.foods[0].nf_cholesterol</p>
+        <p><strong>Sodium: </strong>@Model.foods[0].nf_sodium</p>
+        <p><strong>Potassium: </strong>@Model.foods[0].nf_potassium</p>
+    </article>
+</div>
+
+
 <br />
 
-<form asp-controller="Dashboard" asp-action="SaveFood" asp-route-mealId="mealId" asp-route-numberOfServings="numberOfServings" method="post">
-    <label>Meal Classification</label>
-    <select name="mealId">
-        <option value="1">Breakfast</option>
-        <option value="2">Lunch</option>
-        <option value="3">Dinner</option>
-        <option value="4">Snack</option>
-        <option value="5">Dessert</option>
-    </select>
-
-    <div>
-        <label>Number of Servings: </label>
-        <select name="numberOfServings">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
+<div id="saveFoodForm">
+    <form asp-controller="Dashboard" asp-action="SaveFood" asp-route-mealId="mealId" asp-route-numberOfServings="numberOfServings" method="post">
+        <label>Meal Classification</label>
+        <select name="mealId">
+            <option value="1">Breakfast</option>
+            <option value="2">Lunch</option>
+            <option value="3">Dinner</option>
+            <option value="4">Snack</option>
+            <option value="5">Dessert</option>
         </select>
-    </div>
 
-    <input name="name" type="hidden" value="@Model.foods[0].Name" />
-    <input name="serving_qty" type="hidden" value="@Model.foods[0].serving_qty" />
-    <input name="serving_unit" type="hidden" value="@Model.foods[0].serving_unit" />
-    <button type="submit" value="submit">Add Food</button>
-</form>
+        <div>
+            <label>Number of Servings: </label>
+            <select name="numberOfServings">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+
+        <input name="name" type="hidden" value="@Model.foods[0].Name" />
+        <input name="serving_qty" type="hidden" value="@Model.foods[0].serving_qty" />
+        <input name="serving_unit" type="hidden" value="@Model.foods[0].serving_unit" />
+        <button class="btn btn-info" type="submit" value="submit">Add Food</button>
+    </form>
+</div>

@@ -1,10 +1,14 @@
-﻿@model Tuple<User, IList<UserFood>, IList<UserWeight>>
+﻿@model Tuple<User, IList<UserFood>, IList<UserWeight>, TodaysWeight, bool>
 @{
     ViewData["Title"] = "Index";
     var user = Model.Item1;
     var userFoods = Model.Item2;
     var userWeights = Model.Item3;
+    var todaysWeight = Model.Item4;
+    var weightIsLogged = Model.Item5;
     float totalConsumedCalories = 0;
+
+
 
     foreach (var userFood in userFoods)
     {
@@ -263,12 +267,35 @@
         </div>
         <div id="targetDashboard">
             <div id="targetOpacity">
-                <div>
-                    <h2>Current Weight: @user.CurrentWeight lbs.</h2>
-                    @Html.ValidationMessage("log-your-weight")
-                    @*@if(Validation.IsValid())*@
-                </div>
+            <div>
+                <h2>Current Weight: @user.CurrentWeight lbs.</h2>
+                @*@Html.ValidationMessage("log-your-weight")*@
+            </div>
 
+
+            <!-- if userWeight exists for date.today, render the edit button-->
+            @if (weightIsLogged)
+            {
+                <form asp-controller="Dashboard" asp-action="LogWeight" method="post">
+                    <span>
+                        <div class="register-field">
+                            <button class="btn btn-info edit-weight" value="submit" type="submit">Edit Today's Weight</button>
+                        </div>
+                    </span>
+                </form>
+
+            }
+            else
+            {
+                <form asp-controller="Dashboard" asp-action="LogWeight" method="post">
+                    <input name="weight" type="number" autocomplete="off" value="@user.CurrentWeight" />
+                    <span>
+                        <div class="register-field">
+                            <button class="btn btn-info" value="submit" type="submit">Add Today's Weight</button>
+                        </div>
+                    </span>
+                </form>
+            }
 
                 <!-- if userWeight exists for date.today, render the edit button-->
                 @if (userWeights.Count == 0 || (userWeights[userWeights.Count - 1].DateOfEntry == DateTime.Today && userWeights[userWeights.Count - 1].TodaysWeight != 0))
@@ -324,7 +351,7 @@
                     Start Date
                 </label>
 
-                <input name="startDate" type="date" value="@DateTime.Today.AddDays(-1).ToShortDateString()" />
+                <input name="startDate" type="date" />
 
                 <br />
 
@@ -332,7 +359,7 @@
                     End Date
                 </label>
 
-                <input name="endDate" type="date" placeholder="@DateTime.Today.ToShortDateString()" />
+                <input name="endDate" type="date"/>
 
                 <br />
 

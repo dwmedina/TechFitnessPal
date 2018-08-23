@@ -16,17 +16,8 @@ namespace WebApplication.Web.DAL
 			this.connectionString = connectionString;
 		}
 
-		public IList<UserWeight> GetWeights(User user, DateTime? startDate, DateTime? endDate)
+		public IList<UserWeight> GetWeights(User user, DateTime startDate, DateTime endDate)
 		{
-			if (startDate == null)
-			{
-				startDate = DateTime.Today.AddDays(-10);
-			}
-			if (endDate == null)
-			{
-				endDate = DateTime.Today;
-			}
-
 			List<UserWeight> weightsList = new List<UserWeight>();
 
 			try
